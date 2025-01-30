@@ -22,11 +22,11 @@ public interface IBookService {
 
 
     // PUT -> update a book by isbn
-    boolean updateBook(String isbn, Book book);
+    void updateBook(String isbn, Book book);
 
     // DELETE -> delete a book by isbn, delete all books in the database
-    boolean deleteBookByISBN(String isbn);
-    boolean deleteAllBooks();
-    boolean deleteBookByBookTitle(String bookTitle);
+    void deleteBookByISBN(String isbn);
+    void deleteAllBooks();
+    void deleteBookByBookTitle(String bookTitle);
 
 }// end of IBookServiceImpl interface

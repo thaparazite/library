@@ -93,33 +93,30 @@ public class BookServiceImpl implements IBookService {
 
     // delete a book by its ISBN
     @Override
-    public boolean deleteBookByISBN(String isbn) {
+    public void deleteBookByISBN(String isbn) {
         validateBookByISBN(isbn); // validate if the book exists by its ISBN
         bookRepository.deleteByIsbn(isbn); // delete the book by its ISBN
-        return true; // return true if deletion is successful
     }// end of deleteBookByISBN method
 
     // delete all books from the database
     @Override
-    public boolean deleteAllBooks() {
+    public void deleteAllBooks() {
         bookRepository.deleteAll(); // delete all books
-        return true; // return true if all books are deleted
     }// end of deleteAllBooks method
 
     // delete a book by its title
     @Override
-    public boolean deleteBookByBookTitle(String title) {
+    public void deleteBookByBookTitle(String title) {
         // if no book with the given title exists, throw a BookTitleNotFound exception
         if (bookRepository.findBooksByTitle(title).isEmpty()) {
             throw new BookTitleNotFound(TITLE_NOT_FOUND + title);
         }// end of if block
         bookRepository.deleteBookByBookTitle(title); // delete the book by its title
-        return true; // return true if deletion is successful
     }// end of deleteBookByBookTitle method
 
     // update a book by its ISBN
     @Override
-    public boolean updateBook(String isbn, Book book) {
+    public void updateBook(String isbn, Book book) {
         validateBookByISBN(formatISBN(isbn)); // validate if the book exists by its ISBN
         bookRepository.updateBook(
                 book.getBookTitle(),
@@ -128,7 +125,6 @@ public class BookServiceImpl implements IBookService {
                 book.getYearPublished(),
                 book.getPrice(),
                 book.getIsbn()); // update the book by its ISBN
-        return true; // return true if the update is successful
     }// end of updateBook method
 
     // helper method to map a list of Book entities to a list of BookDTO
