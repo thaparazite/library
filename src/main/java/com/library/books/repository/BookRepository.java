@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,11 +36,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     // delete a book by its isbn
     @Transactional// jakarta, REQUIRED, this method is done completely or not at all
-    boolean deleteByIsbn(String isbn);// delete a book by its isbn
+    void deleteByIsbn(String isbn);// delete a book by its isbn
 
     // delete a book by its title
     @Transactional
-    boolean deleteBookByBookTitle(String bookTitle);
+    void deleteBookByBookTitle(String bookTitle);
 
     // update a book by its isbn
     @Transactional
