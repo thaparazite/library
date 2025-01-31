@@ -70,9 +70,7 @@ public class BookServiceImpl implements IBookService {
      * A generic method to find books by a specific field (author, publisher, yearPublished, price)
      * and throw a custom exception if no books are found.
      */
-    private <T extends RuntimeException> List<BookDTO> findBooks(
-            Supplier<List<Book>> query,
-            Supplier<T> exceptionSupplier) {
+    private <T extends RuntimeException> List<BookDTO> findBooks(Supplier<List<Book>> query, Supplier<T> exceptionSupplier) {
 
         // retrieve all books by the given field
         List<Book> books = query.get();
