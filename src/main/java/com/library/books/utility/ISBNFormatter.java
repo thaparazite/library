@@ -10,11 +10,11 @@ public class ISBNFormatter {
         isbn = isbn.replaceAll("-", "");
         // Format ISBN-10
         if (isbn.length() == 10) {
-            return isbn.replaceAll("(.{1})(.{3})(.{5})(.{1})", "$1-$2-$3-$4");
+            return isbn.replaceAll("(.)(.{3})(.{5})(.)", "$1-$2-$3-$4");
         }
         // Format ISBN-13
         if (isbn.length() == 13) {
-            return isbn.replaceAll("(.{3})(.{1})(.{4})(.{4})(.{1})", "$1-$2-$3-$4-$5");
+            return isbn.replaceAll("(.{3})(.)(.{4})(.{4})(.)", "$1-$2-$3-$4-$5");
         }
         // Return the original ISBN if it doesn't match ISBN-10 or ISBN-13 length
         return isbn;

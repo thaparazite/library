@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class BookISBNMismatchException extends RuntimeException{
-    public BookISBNMismatchException(String message) {
+public class BookAuthorNotFoundException extends RuntimeException{
+    public BookAuthorNotFoundException(String message) {
         super(message);
-    }// end of BookISBNMismatchException constructor
-}// end of BookISBNMismatchException class
+    }// end of BookAuthorNotFoundException constructor
+}// end of BookAuthorNotFoundException class

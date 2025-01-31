@@ -28,17 +28,18 @@ public class BookController {
         for (BookDTO bookDTO : bookDTOS) {
             bookDTO.add(
                     linkTo(methodOn(BookController.class).getAllBooks()).withSelfRel(),
-                    linkTo(methodOn(BookController.class).addBook(null, null)).withRel("add-book:"),
-                    linkTo(methodOn(BookController.class).addAllBooks(null, null)).withRel("add-books:"),
+                    linkTo(methodOn(BookController.class).addBook(new Book(), UriComponentsBuilder.newInstance())).withRel("add-book:"),
+                    linkTo(methodOn(BookController.class).addAllBooks(List.of(), UriComponentsBuilder.newInstance())).withRel("add-books:"),
                     linkTo(methodOn(BookController.class).deleteBookByISBN(bookDTO.getIsbn())).withRel("delete-book:isbn="),
                     linkTo(methodOn(BookController.class).deleteBookByBookTitle(bookDTO.getBookTitle())).withRel("delete-book:bookTitle="),
+                    linkTo(methodOn(BookController.class).deleteAllBooks()).withRel("delete-books:"),
                     linkTo(methodOn(BookController.class).updateBook(bookDTO.getIsbn(), null)).withRel("update-book:isbn="),
-                    linkTo(methodOn(BookController.class).getBookByISBN(bookDTO.getIsbn())).withRel("getByISBN:"),
-                    linkTo(methodOn(BookController.class).getAllBooksByAuthors(bookDTO.getAuthors())).withRel("getByAuthors:"),
-                    linkTo(methodOn(BookController.class).getBookByBookTitle(bookDTO.getBookTitle())).withRel("getByBookTitle:"),
-                    linkTo(methodOn(BookController.class).getBookByPublisher(bookDTO.getPublisher())).withRel("getByPublisher:"),
-                    linkTo(methodOn(BookController.class).getBookByYearPublished(bookDTO.getYearPublished())).withRel("getByYearPublished:"),
-                    linkTo(methodOn(BookController.class).getBookByPrice(bookDTO.getPrice())).withRel("getByPrice:")
+                    linkTo(methodOn(BookController.class).getBookByISBN(bookDTO.getIsbn())).withRel("getBookByISBN:"),
+                    linkTo(methodOn(BookController.class).getAllBooksByAuthors(bookDTO.getAuthors())).withRel("getAllBooksByAuthors:"),
+                    linkTo(methodOn(BookController.class).getBookByBookTitle(bookDTO.getBookTitle())).withRel("getAllBookByBookTitle:"),
+                    linkTo(methodOn(BookController.class).getBookByPublisher(bookDTO.getPublisher())).withRel("getAllBooksByPublisher:"),
+                    linkTo(methodOn(BookController.class).getBookByYearPublished(bookDTO.getYearPublished())).withRel("getAllBooksByYearPublished:"),
+                    linkTo(methodOn(BookController.class).getBookByPrice(bookDTO.getPrice())).withRel("getAllBooksByPrice:")
             );
         }
     }// end of addLinksToBooks method
@@ -59,21 +60,21 @@ public class BookController {
     }// end of getAllBooksByAuthors method
 
     @GetMapping(path = "/getBookByBookTitle:", params = "bookTitle")
-    public List<BookDTO> getBookByBookTitle(@RequestParam String bookTitle) {
+    public BookDTO getBookByBookTitle(@RequestParam String bookTitle) {
         return IBookService.getBookByBookTitle(bookTitle);
     }// end of getBookByBookTitle method
 
-    @GetMapping(path = "/getBookByPublisher:", params = "publisher")
-    public List<BookDTO> getBookByPublisher(@RequestParam String publisher) {
-        return IBookService.getBookByPublisher(publisher);
+    @GetMapping(path = "/getAllBooksByPublisher:", params = "publishers")
+    public List<BookDTO> getBookByPublisher(@RequestParam String publishers) {
+        return IBookService.getBookByPublisher(publishers);
     }// end of getBookByPublisher method
 
-    @GetMapping(path = "/getBookByYearPublished:", params = "yearPublished")
+    @GetMapping(path = "/getAllBooksByYearPublished:", params = "yearPublished")
     public List<BookDTO> getBookByYearPublished(@RequestParam int yearPublished) {
         return IBookService.getBookByYearPublished(yearPublished);
     }// end of getBookByYearPublished method
 
-    @GetMapping(path = "/getBookByPrice:", params = "price")
+    @GetMapping(path = "/getAllBooksByPrice:", params = "price")
     public List<BookDTO> getBookByPrice(@RequestParam double price) {
         return IBookService.getBookByPrice(price);
     }// end of getBookByPrice method
@@ -110,7 +111,7 @@ public class BookController {
                 .body(bookDTOS);
     }// end of addAllBooks method
 
-    @PostMapping("/add-book:isbn={isbn}")
+    @PostMapping()
     public ResponseEntity<String> postNotSupported() {
         return ResponseEntity
                 .status(HttpStatus.METHOD_NOT_ALLOWED)
@@ -148,12 +149,12 @@ public class BookController {
                 .body("All books have been deleted!");
     }// end of deleteAllBooks method
 
-    @DeleteMapping("/delete-book:bootTitle={bookTitle}")
+    @DeleteMapping("/delete-book:bookTitle={bookTitle}")
     public ResponseEntity<String> deleteBookByBookTitle(@PathVariable String bookTitle) {
         IBookService.deleteBookByBookTitle(bookTitle);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Book with title: " + bookTitle + " has been deleted!");
+                .body("Book with title: \"" + bookTitle + "\" has been deleted!");
     }// end of deleteBookByBookTitle method
 
 }// end of BookController class

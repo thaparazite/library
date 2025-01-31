@@ -15,11 +15,10 @@ public interface IBookService {
     List<BookDTO> getAllBooks();
     BookDTO getBookByISBN(String isbn);
     List<BookDTO> getAllBooksByAuthors(String author);
-    List<BookDTO> getBookByBookTitle(String bookTitle);
+    BookDTO getBookByBookTitle(String bookTitle);
     List<BookDTO> getBookByPublisher(String publisher);
     List<BookDTO> getBookByYearPublished(int yearPublished);
     List<BookDTO> getBookByPrice(double price);
-
 
     // PUT -> update a book by isbn
     void updateBook(String isbn, Book book);

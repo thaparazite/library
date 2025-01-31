@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class BookISBNAlreadyExistsException extends RuntimeException{
-    public BookISBNAlreadyExistsException(String s) {
-        super(s);
+    public BookISBNAlreadyExistsException(String message) {
+        super(message);
     }// end of BookISBNAlreadyExistsException constructor
 }// end of BookISBNAlreadyExistsException class

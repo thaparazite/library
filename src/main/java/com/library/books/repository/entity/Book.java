@@ -1,13 +1,10 @@
 package com.library.books.repository.entity;
 
-import com.library.books.utility.ISBNFormatter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -29,7 +26,7 @@ public class Book {
 
     @NotBlank(message = "ISBN cannot be blank!")
     @Pattern(
-            regexp = "^(97[89]-\\d{1,5}-\\d{1,7}-\\d{1,7}-\\d{1})|(\\d{1}-\\d{3}-\\d{5}-[\\dX])$",
+            regexp = "^(97[89]-\\d{1,5}-\\d{1,7}-\\d{1,7}-\\d)|(\\d-\\d{3}-\\d{5}-[\\dX])$",
             message = "Invalid ISBN format! It must be either ISBN-10 or ISBN-13 with dashes."
     )// pattern to match ISBN-10 or ISBN-13
     private String isbn; // ISBN of the book

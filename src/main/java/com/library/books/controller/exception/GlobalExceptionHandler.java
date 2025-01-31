@@ -7,25 +7,28 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler{
 
-    private ResponseEntity<DetailedErrorResponse> handleException(RuntimeException e, WebRequest webRequest, HttpStatus status) {
+    private ResponseEntity<DetailedErrorResponse> handleException(RuntimeException e, WebRequest webRequest) {
         DetailedErrorResponse response = new DetailedErrorResponse(
                 webRequest.getDescription(false),
                 e.getMessage(),
-                status
+                HttpStatus.BAD_REQUEST
         );
-        return new ResponseEntity<>(response, status);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({
             BookISBNAlreadyExistsException.class,
             BookISBNMismatchException.class,
             BookISBNNotFoundException.class,
-            BookTitleNotFound.class
+            BookTitleNotFound.class,
+            BookAuthorNotFoundException.class,
+            BookPublisherNotFoundException.class,
+            BookYearPublishedNotFoundException.class
     })
     public ResponseEntity<DetailedErrorResponse> handleBookExceptions(RuntimeException e, WebRequest webRequest) {
-        return handleException(e, webRequest, HttpStatus.BAD_REQUEST);
+        return handleException(e, webRequest);
     }
 
 }// end of GlobalExceptionHandler class

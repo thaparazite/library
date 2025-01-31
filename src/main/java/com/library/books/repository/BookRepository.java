@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,24 +14,19 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByIsbn(String isbn);
 
     // method to find all books by their authors
-    @Query("select b from Book b where b.authors like %:authorName%")
-    List<Book> findBooksByAuthorName(@Param("authorName") String authorName);
+    List<Book> findByAuthors(String authors);
 
     // method to find all books by their authors
-    @Query("select b from Book b where b.bookTitle like %:bookTitle%")
-    List<Book> findBooksByTitle(@Param("bookTitle") String bookTitle);
+    Optional<Book> findByBookTitle(String bookTitle);
 
     // method to find all books by their publisher
-    @Query("select b from Book b where b.publisher like %:publisher%")
-    List<Book> findBooksByPublisher(@Param("publisher") String publisher);
+    List<Book> findByPublisher(String publisher);
 
     // method to find all books by their year published
-    @Query("select b from Book b where b.yearPublished = :yearPublished")
-    List<Book> findBooksByYearPublished(@Param("yearPublished") int yearPublished);
+    List<Book> findByYearPublished(int yearPublished);
 
     // method to find all books by their price
-    @Query("select b from Book b where b.price = :price")
-    List<Book> findBooksByPrice(@Param("price") double price);
+    List<Book> findByPrice(double price);
 
     // delete a book by its isbn
     @Transactional// jakarta, REQUIRED, this method is done completely or not at all
@@ -40,7 +34,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     // delete a book by its title
     @Transactional
-    void deleteBookByBookTitle(String bookTitle);
+    void deleteByBookTitle(String bookTitle);
 
     // update a book by its isbn
     @Transactional
